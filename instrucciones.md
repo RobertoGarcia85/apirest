@@ -18,3 +18,9 @@ pnpm add -D nodemon //https://nodemon.io/ esa instalacion es en local pnpm insta
 }
 12. si falla algo, borrar la carpeta node_modules, entonces instalar todas las dependencias con el siguiente comando: 
 pnpm install
+
+//SIGUIENTE SESION
+1. Variables de entorno, crear un archivo .dev que sera una variable global 
+2. ejecutar el comando pnpm add dotenv
+3. en index.js importar: import 'dotenv/config';
+4. para ejecutar la variable de entorno: const PORT = process.env.PORT
