@@ -24,3 +24,38 @@ pnpm install
 2. ejecutar el comando pnpm add dotenv
 3. en index.js importar: import 'dotenv/config';
 4. para ejecutar la variable de entorno: const PORT = process.env.PORT
+5. Dentro de src, crear una carpeta de routes (capas)
+6. dentro de routes, crear users.routes.js
+7. Cortar todos los CRUD de index.js a users.routes.js y al final escribir export default userRouter;
+8. Luego en index.js, escribir en la parte superior: import userRouter from './routes/users.routes.js';
+9. Luego que todo lo anterior este disponible en: app.use('/', userRouter);
+10. 
+
+--NUEVA SESION
+1. Seguridad en mis apis, MIDDLEWARES, autenticación antes de mi endpoint
+2. crear una carpeta en src con el nombre middleware
+3. crear un archivo js con el nombre apikey.middleware.js
+4. hay que enviar un header para que mi endpoint sea mas seguro.
+5. se crea una constante y es el siguiente codigo: 
+    const apikeymiddleware = (req, res, next) => {
+    const apikey = req.headers['x-api-key']; 
+}
+6. luego agregar el siguiente codigo: 
+if (!apikey ||apikey !== 'sk_live_gx9WCOcbRq8emvQPCVCHj2hVcFTAWsfk'){
+        return res.status(401).json({ message: 'API key is missing or invalid' });
+    }
+    next();
+7. Luego en index.js, agregar el siguiente codigo despues de express.json()
+//MIDDLEWARES
+app.use(apikeymiddleware);
+y en la parte superior hacer un import: import { apikeymiddleware } from './middleware/apikey.middleware.js';
+
+
+//USAR PRISMA.IO PARA CONSULTAR BD EN POSTGRE
+1. instalamos la dependencia: pnpm add -D prisma
+2. luego descargamos sus dependencias necesarias: pnpm approve-builds, seleccionamos la letra a y luego enter.
+3. instalar el menu de prisma, se instala: pnpm add @prisma/client
+4. Luego usar este comando: pnpm exec prisma init --datasource-provider postgresql
+5. configurar el archivo .env concerniente al acceso a la BD
+6. creo un archivo prisma.config.ts
+7. creo una carpeta prisma, dentro un archivo schema.prisma

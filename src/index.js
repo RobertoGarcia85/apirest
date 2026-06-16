@@ -1,5 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
+import userRouter from './routes/users.routes.js';
+import { apikeymiddleware } from './middleware/apikey.middleware.js';
+
 //CREAR UNA INSTANCIA DE EXPRESS
 const app = express();
 //CONFIGURAR EL PUERTO
@@ -7,55 +10,16 @@ const PORT = process.env.PORT
 //ESPECIFICAR JSON
 app.use(express.json());
 
+//MIDDLEWARES
+app.use(apikeymiddleware);
+
 //ENDPOINTS
-app.get('/', (req, res) => {
-    //BUSCAR EN LA BASE DE DATOS
-    console.log('Alguien consulto el endopoint');
-    res.status(200).json({ mensaje: 'Endpoint de obtener funcionando' });
-});
+app.use('/', userRouter);
 
-//ENDPOINT DE TIPO POST
-app.post("/create", (req, res) => {
-    //RECIBIR LOS DATOS DEL BODY
-    const { nombre, edad } = req.body;
-    if(!nombre || !edad) {
-        return res.status(400).json({ mensaje: 'Faltan datos en el body' });
-    }else{
-        console.log(`Nombre: ${nombre}, Edad: ${edad}`);
-        res.status(201).json({ mensaje: 'Usuario creado exitosamente', data: { nombre, edad } });
-    }
-    
-});
 
-//ENDPOINT DE TIPO PUT
-app.put("/update/:id", (req, res) => {
-    const { id } = req.params;
-    const { nombre, edad } = req.body;
-    if(!nombre || !edad) {
-        return res.status(400).json({ mensaje: 'Faltan datos: nombre o edad' });
-    }else{
-        console.log(`Nombre: ${nombre}, Edad: ${edad}`);
-        res.status(200).json({ mensaje: `El usuario con ID ${id} ha sido actualizado`});
-    }
-});
 
-//ENDPOINT DE TIPO DELETE
-app.delete("/delete/:id", (req, res) => {
-    const { id } = req.params;
-    const { nombre, edad } = req.body;
-    if(!nombre || !edad) {
-        return res.status(400).json({ mensaje: 'Faltan datos: nombre o edad' });
-    }else{
-        console.log(`Nombre: ${nombre}, Edad: ${edad}`);
-        res.status(200).json({ mensaje: `El usuario con ID ${id} ha sido eliminado`});
-    }
-});
 
-//MI PRIMER ENDPOINT
-app.get('/test', (req, res) => {
-    //res.status(200).json({ mensaje: 'Hola desde mi primer API'});
-    res.send('Hola desde mi primer API Roberto García');
-});
+
 //INICIAR EL SERVIDOR
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT} 📎`);
