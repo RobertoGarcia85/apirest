@@ -2,6 +2,7 @@ import {Router} from 'express';
 import prisma from '../lib/prisma.js';
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 
 //CREAR UNA INSTANCIA DE EXPRESS
 const userRouter = Router();
@@ -11,7 +12,7 @@ const studentSchema = z.object({
     nie: z.string().min(5, { message: "El NIE debe tener al menos 5 caracteres" }).max(10, { message: "El NIE no puede tener más de 10 caracteres" }),
     firstname: z.string().min(3, { message: "El nombre debe tener al menos 3 caracteres" }).max(20, { message: "El nombre no puede tener más de  caracteres" }),
     lastname: z.string().min(3, { message: "El apellido debe tener al menos 3 caracteres" }).max(20, { message: "El apellido no puede tener más de 20 caracteres"}),
-    email: z.string().email({ message: "El correo electrónico no es válido" }),
+    email: z.string().email({ message: "El correo electrónico no es válido" }).trim().toLowerCase(),
     password: z.string().min(8, { message: "La contraseña debe tener al menos 8 caracteres" }).max(24,{message:"La contraseña no puede tener más de 24 caracteres"}),
     phone: z.string().optional(),
     birthdate: z.string().optional()  //regex("","") para validar un valor como el dui
@@ -45,7 +46,7 @@ userRouter.get("/", async (req, res) => {
 });
  
 //ENDPOINT DE TIPO POST
-userRouter.post("/create", validate(studentSchema), async(req, res) => {
+userRouter.post("/create", authMiddleware, validate(studentSchema), async(req, res) => {
     //EXTRACCION DE LOS DATOS DEL BODY
     const{nie, firstname,lastname, email, password, phone, birthdate} = req.body;
 
@@ -63,7 +64,7 @@ userRouter.post("/create", validate(studentSchema), async(req, res) => {
             nie: nie,
             firstname: firstname,
             lastname: lastname,
-            email: email.toLowerCase().trim(),
+            email: email,
             password: hashedPassword,
             phone: phone,
             bithdate: birthdate ? new Date(birthdate) : null   

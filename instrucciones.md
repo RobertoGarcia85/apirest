@@ -199,4 +199,10 @@ export const authMiddleware = (req, res, next) => {
 };
 //Miercoles 01 de Julio de 2026
 1. Se termina de agregar codigo en auth.middleware.js, para validar que no accedan a mis endpoints sin un token de acceso
-2. 
+2. vamos al archivo users.routes.js y modificamos el endpoint create.. pero primero creamos una importacion:
+import { authMiddleware } from '../middleware/auth.middleware.js';
+
+userRouter.post("/create", authMiddleware, validate(studentSchema), async(req, res)
+se agrega el authmiddleware.
+3. luego abrir httpie, generar un nuevo token con post localhost:8000/auth/login y copiarlo sin las comillas, luego me voy para el create, y cambiar los datos del body porque daria error, y en auth en Bearer token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoibWFyaWVmZXJAZ21haWwuY29tIiwic3R1ZGVudENvZGUiOiIwMDAwMTAiLCJpYXQiOjE3ODI5NTI4NDcsImV4cCI6MTc4Mjk4MTY0N30.QbzXYMfkzRak9XSpb0WC0OUmRmDi2IyAOCT4i8bcFV0.
+4. Ejecutar el endpoint de create y funciona sin problema, post localhost:8000/create, no se te olvide agregar datos del body, param con apiKey y auth con bearer token.
