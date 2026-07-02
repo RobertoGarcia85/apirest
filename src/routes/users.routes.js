@@ -97,9 +97,11 @@ userRouter.post("/create", authMiddleware, validate(studentSchema), async(req, r
     
 // });
 //ENDPOINT DE TIPO PUT ACTUALIZAR
-userRouter.put("/update/:id", async (req, res) => {
+userRouter.put("/update/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
     const{nie, firstname,lastname, email, password, phone, birthdate} = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 12);
    try {
     const updatedStudent = await prisma.student.update({
         where: { id: parseInt(id) },
@@ -108,7 +110,7 @@ userRouter.put("/update/:id", async (req, res) => {
             firstname: firstname,
             lastname: lastname,
             email: email,
-            password: password,
+            password: hashedPassword,
             phone: phone,
             bithdate: birthdate ? new Date(birthdate) : null
         }

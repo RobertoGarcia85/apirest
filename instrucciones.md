@@ -206,3 +206,10 @@ userRouter.post("/create", authMiddleware, validate(studentSchema), async(req, r
 se agrega el authmiddleware.
 3. luego abrir httpie, generar un nuevo token con post localhost:8000/auth/login y copiarlo sin las comillas, luego me voy para el create, y cambiar los datos del body porque daria error, y en auth en Bearer token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoibWFyaWVmZXJAZ21haWwuY29tIiwic3R1ZGVudENvZGUiOiIwMDAwMTAiLCJpYXQiOjE3ODI5NTI4NDcsImV4cCI6MTc4Mjk4MTY0N30.QbzXYMfkzRak9XSpb0WC0OUmRmDi2IyAOCT4i8bcFV0.
 4. Ejecutar el endpoint de create y funciona sin problema, post localhost:8000/create, no se te olvide agregar datos del body, param con apiKey y auth con bearer token.
+5. Vamos a consumir nuestras endpoint, se trabajara con el front end o interfaz. Existe framework angular.js, react.js, vue.js, svelte.js
+6. Se usara React de meta de facebook, seria bueno observar next.js
+//dato curioso nestjs es mejor que express.
+7. //react native con xpo para correr el emulador
+8. instalar  pnpm create vite en una nueva carpeta. Ver configuracion del pnpm con una captura de pantalla.
+- website, react, javascript, eslint, yes
+9. 
