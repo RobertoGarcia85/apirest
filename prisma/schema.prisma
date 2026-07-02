@@ -4,10 +4,37 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
+ // output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+//Creacion de la tabla student en modelo prisma, con sus respectivos campos y tipos de datos
+model student{
+  id Int @id @default(autoincrement())
+  nie String @unique
+  firstname String
+  lastname String
+  email String @unique
+  password String
+  phone String? //dato opcional el signo interrogacion
+  bithdate DateTime?
+  active Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("students") //nombre de la tabla en PostgreSQL
+}
+model subject{
+  id Int @id @default(autoincrement())
+  code String @unique
+  name String
+  credits Int @default(3)
+  active Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subjects") //nombre de la tabla en PostgreSQL
 }

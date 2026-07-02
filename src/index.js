@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import userRouter from './routes/users.routes.js';
 import { apikeymiddleware } from './middleware/apikey.middleware.js';
+import authRouter from './routes/auth.routes.js';
 
 //CREAR UNA INSTANCIA DE EXPRESS
 const app = express();
@@ -15,7 +16,7 @@ app.use(apikeymiddleware);
 
 //ENDPOINTS
 app.use('/', userRouter);
-
+app.use('/auth', authRouter);
 
 
 
