@@ -1,4 +1,5 @@
 # API REST con Express, Prisma, Zod, JWT y Bcrypt
+# Docente: Lic. Roberto Antonio García Machado
 
 Documentación paso a paso del proceso de construcción de una API REST para la gestión de estudiantes ("academy"), usando **Node.js**, **Express 5**, **Prisma ORM** (PostgreSQL), **Zod**, **bcryptjs** y **JSON Web Tokens (JWT)**.
 
